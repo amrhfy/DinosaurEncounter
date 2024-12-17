@@ -3,7 +3,6 @@
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Button from '@/components/common/Button'
-import { BsArrowRight } from 'react-icons/bs'
 import SectionSubtitle from './SectionSubtitle'
 
 interface CTASectionProps {
@@ -28,8 +27,6 @@ const CTASection = ({
   secondaryButtonText = "Learn More",
   secondaryButtonHref = "/about",
   image = "/images/dinopedia/1.png",
-  theme = 'dark',
-  showArrow = false
 }: CTASectionProps) => {
   return (
     <section className="relative py-16 md:py-32 overflow-hidden">
@@ -81,7 +78,6 @@ const CTASection = ({
             <Button 
               href={primaryButtonHref}
               className="w-full sm:w-auto justify-center bg-amber-500/20 hover:bg-amber-500/30 backdrop-blur-sm border border-amber-500/10 hover:text-white hover:border-amber-500/20 group"
-              showArrow={showArrow}
             >
               {primaryButtonText}
             </Button>

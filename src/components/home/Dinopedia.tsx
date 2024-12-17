@@ -4,8 +4,8 @@ import { useState, useRef } from 'react'
 import Button from '@/components/common/Button'
 import { dinoCategories } from '@/lib/data/categories'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { BsArrowRight, BsPlus } from 'react-icons/bs'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
+import { BsPlus } from 'react-icons/bs'
 
 const Dinopedia = () => {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -17,7 +17,6 @@ const Dinopedia = () => {
   })
 
   const translateX = useTransform(scrollYProgress, [0, 1], [0, isMobile ? 0 : -50])
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.3, 1, 1, 0.3])
 
   const displayedCategories = isMobile ? dinoCategories.slice(0, 3) : dinoCategories
 

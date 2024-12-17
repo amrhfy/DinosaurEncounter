@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { motion, AnimatePresence, PanInfo } from 'framer-motion'
+import { motion, PanInfo } from 'framer-motion'
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
 
 interface CarouselProps {

@@ -1,8 +1,5 @@
 'use client'
 
-import { FaArrowRight } from "react-icons/fa";
-import { BsChevronDown } from "react-icons/bs";
-import { useEffect, useState } from "react";
 import Button from '@/components/common/Button'
 import { motion } from 'framer-motion'
 import ScrollIndicator from '@/components/common/ScrollIndicator'

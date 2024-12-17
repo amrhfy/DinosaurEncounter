@@ -1,11 +1,9 @@
 'use client'
 
-import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
-import { useState, useEffect, useRef } from 'react'
+import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Button from '@/components/common/Button'
-import CTASection from '@/components/common/CTASection'
-import { BsArrowRight, BsChevronDown, BsPlay, BsPlus } from 'react-icons/bs'
+  import CTASection from '@/components/common/CTASection'
 import ScrollIndicator from '@/components/common/ScrollIndicator'
 import SectionSubtitle from '@/components/common/SectionSubtitle'
 
@@ -142,7 +140,6 @@ export default function Adventure() {
               className="flex flex-col sm:flex-row gap-4"
             >
               <Button className="w-full sm:w-auto">Start Your Journey</Button>
-              <Button variant="outline" className="w-full sm:w-auto">Watch Video</Button>
             </motion.div>
           </motion.div>
         </div>

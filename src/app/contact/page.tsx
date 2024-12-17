@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { BsEnvelope, BsPhone, BsArrowRight, BsCopy, BsCheck } from 'react-icons/bs'
+import { BsEnvelope, BsPhone, BsCopy, BsCheck } from 'react-icons/bs'
 import { useState } from 'react'
 import Image from 'next/image'
 import Button from '@/components/common/Button'
@@ -29,16 +29,9 @@ export default function Contact() {
     e.preventDefault()
     setIsSubmitting(true)
     
-    try {
-      await new Promise(resolve => setTimeout(resolve, 1500))
-      setSubmitStatus('success')
-      setFormData({ name: '', email: '', subject: '', message: '' })
-    } catch (error) {
-      setSubmitStatus('error')
-    } finally {
-      setIsSubmitting(false)
-      setTimeout(() => setSubmitStatus('idle'), 3000)
-    }
+    await new Promise(resolve => setTimeout(resolve, 1500))
+    setSubmitStatus('success')
+    setFormData({ name: '', email: '', subject: '', message: '' })
   }
 
   const handleCopy = async (text: string, field: string) => {

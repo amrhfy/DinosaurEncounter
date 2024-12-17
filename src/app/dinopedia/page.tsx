@@ -19,7 +19,6 @@ const categories = [
 ]
 
 export default function Dinopedia() {
-  const [isVisible, setIsVisible] = useState(true)
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [selectedDino, setSelectedDino] = useState<Dinosaur | null>(null)
   

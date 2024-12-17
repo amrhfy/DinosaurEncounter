@@ -3,8 +3,9 @@
 import { useState } from 'react'
 import Button from '@/components/common/Button'
 import { motion } from 'framer-motion'
-import { BsArrowRight } from 'react-icons/bs'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
+import Image from 'next/image'
+import { JSX } from 'react'
 
 interface Attraction {
   id: number
@@ -112,10 +113,13 @@ const Attractions = (): JSX.Element => {
                   }}
                   transition={{ duration: 0.6 }}
                 >
-                  <img
+                  <Image
                     src={attraction.image}
                     alt={attraction.title}
                     className="w-full h-full object-cover"
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    priority={index < 3}
                   />
                   <motion.div 
                     className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"
