@@ -12,6 +12,13 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      container: {
+        center: true,
+        padding: "1rem",
+      },
+      fontFamily: {
+        poppins: ["var(--font-poppins)", "sans-serif"],
+      },
     },
   },
   plugins: [],
