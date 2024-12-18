@@ -2,10 +2,11 @@
   "name": "dinosaur-encounter",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "node server.js",
+    "build": "NODE_ENV=production next build --no-lint --no-mangling",
+    "start": "NODE_ENV=production node server.mjs",
     "lint": "next lint"
   },
   "dependencies": {
