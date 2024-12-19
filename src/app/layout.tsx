@@ -12,8 +12,11 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "BETA Dinosaur Encounter",
+  title: "[BETA] Dinosaur Encounter",
   description: "@amrhfy",
+  icons: {
+    icon: "/logos/favicon.ico",
+  },
 };
 
 export default function RootLayout({
