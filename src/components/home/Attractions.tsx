@@ -204,7 +204,7 @@ const Attractions = (): JSX.Element => {
             className="mt-8 text-center"
           >
             <Button 
-              href="/attractions"
+              href="/adventure"
               className="w-full sm:w-auto justify-center"
             >
               View All Attractions
