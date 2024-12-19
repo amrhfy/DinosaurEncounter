@@ -4,6 +4,7 @@ import Navbar from "@/components/common/Navbar";
 import ScrollGradient from "@/components/common/ScrollGradient";
 import { Poppins } from "next/font/google";
 import Footer from "@/components/common/Footer"
+import { Analytics } from "@vercel/analytics/react"
 
 const poppins = Poppins({
   subsets: ["latin"],
