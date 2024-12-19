@@ -561,35 +561,69 @@ export default function Dinopedia() {
           )}
         </AnimatePresence>
 
-        {/* Disclaimer Overlay */}
+        {/* Fixed Position Disclaimer */}
         <AnimatePresence>
           {showDisclaimer && (
-            <>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              className="fixed bottom-4 z-[999998] px-4 sm:px-6 w-full sm:max-w-md sm:right-4"
+            >
               <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="fixed inset-0 z-[999998] bg-black/80 flex items-center justify-center p-4"
+                className="relative bg-zinc-900/95 backdrop-blur-md rounded-xl border border-white/10 shadow-2xl overflow-hidden"
               >
+                {/* Progress Bar */}
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 20 }}
-                  className="bg-black/80 backdrop-blur-md rounded-xl border border-white/10 p-6 sm:p-8 max-w-md mx-auto"
-                >
-                  <h3 className="text-xl sm:text-2xl font-light text-white mb-4">Disclaimer</h3>
-                  <p className="text-gray-400 mb-6">
-                    Our Dinopedia catalogue is still being updated. Some information may be inaccurate and images may not represent the actual species.
-                  </p>
-                  <button
-                    onClick={() => setShowDisclaimer(false)}
-                    className="px-6 py-3 bg-amber-500/20 hover:bg-amber-500/30 backdrop-blur-sm border border-amber-500/10 hover:border-amber-500/20 rounded-lg text-white/90 text-sm transition-all duration-300"
-                  >
-                    Got it
-                  </button>
-                </motion.div>
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ duration: 5, ease: "linear" }}
+                  className="absolute top-0 left-0 right-0 h-0.5 bg-amber-500/50 origin-left"
+                />
+
+                {/* Content */}
+                <div className="p-4 sm:p-6">
+                  <div className="flex items-start gap-4">
+                    {/* Icon */}
+                    <div className="shrink-0 w-10 h-10 rounded-full bg-amber-500/10 flex items-center justify-center">
+                      <div className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+                    </div>
+
+                    {/* Text Content */}
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-sm font-medium text-white mb-1">Disclaimer</h3>
+                      <p className="text-xs text-white/70 leading-relaxed">
+                        Our Dinopedia catalogue is still being updated. Some information may be inaccurate and images may not represent the actual species.
+                      </p>
+                    </div>
+
+                    {/* Close Button */}
+                    <button
+                      onClick={() => setShowDisclaimer(false)}
+                      className="shrink-0 w-6 h-6 rounded-md flex items-center justify-center text-white/40 hover:text-white/70 hover:bg-white/10 transition-colors"
+                    >
+                      <BsX className="w-4 h-4" />
+                    </button>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex items-center justify-end gap-2 mt-4">
+                    <button
+                      onClick={() => setShowDisclaimer(false)}
+                      className="px-3 py-1.5 text-xs text-white/70 hover:text-white transition-colors"
+                    >
+                      Dismiss
+                    </button>
+                    <button
+                      onClick={() => setShowDisclaimer(false)}
+                      className="px-3 py-1.5 text-xs bg-amber-500/10 hover:bg-amber-500/20 text-amber-500 rounded-md transition-colors"
+                    >
+                      Got it
+                    </button>
+                  </div>
+                </div>
               </motion.div>
-            </>
+            </motion.div>
           )}
         </AnimatePresence>
       </div>

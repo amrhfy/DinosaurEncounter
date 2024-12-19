@@ -108,60 +108,62 @@ export default function About() {
           <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/90 to-transparent" />
         </div>
 
-        <div className="relative z-10 w-full px-4 sm:container sm:mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.8 }}
-            className="max-w-3xl space-y-6 sm:space-y-8"
-          >
-            <SectionSubtitle text="Welcome to the Past" className="mb-4 sm:mb-6" />
-            <h1 className="space-y-2 sm:space-y-4">
-              <motion.span 
-                className="block text-4xl sm:text-7xl md:text-8xl font-extralight text-white"
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.2 }}
-              >
-                Discover Our
-              </motion.span>
-              <motion.span 
-                className="block text-4xl sm:text-6xl md:text-[7rem] font-thin text-transparent bg-clip-text bg-gradient-to-br from-white via-amber-500/50 to-amber-500/20"
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.3 }}
-              >
-                Story
-              </motion.span>
-            </h1>
-            <p className="text-base sm:text-xl text-gray-400 leading-relaxed">
-              Step into a world where prehistoric giants roam and ancient mysteries unfold.
-            </p>
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4 }}
-              className="flex flex-col sm:flex-row gap-4"
+        <div className="relative z-10 w-full">
+          <div className="max-w-[1800px] mx-auto px-4 sm:px-6 md:px-8 lg:px-16">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.8 }}
+              className="max-w-3xl space-y-6 sm:space-y-8"
             >
-              <Button 
-                className="w-full sm:w-auto"
-                onClick={() => {
-                  const nextSection = document.querySelector('#features')
-                  if (nextSection) {
-                    nextSection.scrollIntoView({ behavior: 'smooth' })
-                  }
-                }}
+              <SectionSubtitle text="Welcome to the Past" className="mb-4 sm:mb-6" />
+              <h1 className="space-y-2 sm:space-y-4">
+                <motion.span 
+                  className="block text-4xl sm:text-7xl md:text-8xl font-extralight text-white"
+                  initial={{ opacity: 0, x: -50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.2 }}
+                >
+                  Discover Our
+                </motion.span>
+                <motion.span 
+                  className="block text-4xl sm:text-6xl md:text-[7rem] font-thin text-transparent bg-clip-text bg-gradient-to-br from-white via-amber-500/50 to-amber-500/20"
+                  initial={{ opacity: 0, x: -50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.3 }}
+                >
+                  Story
+                </motion.span>
+              </h1>
+              <p className="text-base sm:text-xl text-gray-400 leading-relaxed">
+                Step into a world where prehistoric giants roam and ancient mysteries unfold.
+              </p>
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4 }}
+                className="flex flex-col sm:flex-row gap-4"
               >
-                Start Your Journey
-              </Button>
-              <Button 
-                className="w-full sm:w-auto bg-transparent border border-white/20 opacity-50 pointer-events-none"
-                onClick={() => {}}
-              >
-                Watch Video
-              </Button>
+                <Button 
+                  className="w-full sm:w-auto"
+                  onClick={() => {
+                    const nextSection = document.querySelector('#features')
+                    if (nextSection) {
+                      nextSection.scrollIntoView({ behavior: 'smooth' })
+                    }
+                  }}
+                >
+                  Start Your Journey
+                </Button>
+                <Button 
+                  className="w-full sm:w-auto bg-transparent border border-white/20 opacity-50 pointer-events-none"
+                  onClick={() => {}}
+                >
+                  Watch Video
+                </Button>
+              </motion.div>
             </motion.div>
-          </motion.div>
+          </div>
         </div>
 
         {/* Scroll Indicator */}

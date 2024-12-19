@@ -3,22 +3,21 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
-import { FaFacebook, FaInstagram } from 'react-icons/fa'
-import { FaTiktok } from 'react-icons/fa6'
 import { motion, AnimatePresence } from 'framer-motion'
 import { usePathname } from 'next/navigation'
-import { BsX, BsArrowRight } from 'react-icons/bs'
+import { BsX, BsArrowUpRight, BsTicket, BsTicketPerforated, BsCalendar2Check } from 'react-icons/bs'
+import { HiOutlineTicket } from 'react-icons/hi'
+import { IoTicketOutline } from 'react-icons/io5'
 
-type HoveredItem = {
-  type: 'nav' | 'social'
+interface NavItem {
   name: string
-} | null
+  href: string
+  isNew?: boolean
+}
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false)
-  const [hoveredItem, setHoveredItem] = useState<HoveredItem>(null)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [selectedItem, setSelectedItem] = useState<string | null>(null)
   const pathname = usePathname()
 
   // Close mobile menu when route changes
@@ -47,19 +46,12 @@ const Navbar = () => {
     }
   }, [isMobileMenuOpen])
 
-  const navItems = [
-    { name: 'HOME', href: '/', description: 'Return to the main page' },
-    { name: 'ADVENTURE', href: '/adventure', description: 'Explore exciting dinosaur adventures' },
-    { name: 'DINOPEDIA', href: '/dinopedia', description: 'Learn about prehistoric creatures' },
-    { name: 'TICKETS', href: '/tickets', description: 'Book your visit today' },
-    { name: 'ABOUT', href: '/about', description: 'Discover our story' },
-    { name: 'CONTACT', href: '/contact', description: 'Get in touch with us' }
-  ]
-
-  const socialLinks = [
-    { icon: FaFacebook, href: 'https://www.facebook.com/dinoencounter/', name: 'Facebook' },
-    { icon: FaTiktok, href: 'https://www.tiktok.com/@dinosaur.encounter?lang=en', name: 'TikTok' },
-    { icon: FaInstagram, href: 'https://www.instagram.com/dinosaur_encounter/?hl=en', name: 'Instagram' }
+  const navItems: NavItem[] = [
+    { name: 'Home', href: '/' },
+    { name: 'Adventure', href: '/adventure' },
+    { name: 'Dinopedia', href: '/dinopedia', isNew: true },
+    { name: 'About', href: '/about' },
+    { name: 'Contact', href: '/contact' }
   ]
 
   return (
@@ -67,229 +59,195 @@ const Navbar = () => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6 }}
-      className={`fixed top-0 w-full z-50 transition-all duration-500 ${
-        scrolled ? 'h-20' : 'h-24'
-      }`}
+      className="fixed top-0 w-full z-50"
     >
-      <div className={`w-full h-full transition-all duration-500 ${
-        scrolled 
-          ? 'bg-black/30 backdrop-blur-md' 
-          : 'bg-transparent'
-      }`}>
-        <div className="max-w-[1800px] mx-auto px-4 md:px-16 h-full">
-          <div className="flex items-center justify-between h-full">
-            {/* Logo */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
-              className={`transition-transform duration-300 ${
-                scrolled ? 'scale-90' : 'scale-100'
-              }`}
-            >
-              <Link href="/">
-                <Image
-                  src="/logos/logo-colored.png"
-                  alt="Logo"
-                  width={120}
-                  height={40}
-                  className="opacity-90 hover:opacity-100 transition-all"
-                />
-              </Link>
-            </motion.div>
+      {/* Minimal Backdrop */}
+      <div 
+        className={`absolute inset-0 transition-all duration-500 ${
+          scrolled 
+            ? 'bg-zinc-950/10 backdrop-blur-md' 
+            : 'bg-zinc-950/10 backdrop-blur-sm'
+        }`}
+      />
 
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-12">
-              {/* Main Nav */}
-              <div className="flex items-center gap-8">
-                {navItems.map((item) => (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    onMouseEnter={() => setHoveredItem({ type: 'nav', name: item.name })}
-                    onMouseLeave={() => setHoveredItem(null)}
-                    className="relative py-2 group"
-                  >
-                    <span className={`text-sm tracking-[0.2em] font-light transition-all duration-300
-                      ${pathname === item.href 
-                        ? 'text-white' 
-                        : hoveredItem?.type === 'nav'
-                          ? hoveredItem.name === item.name
-                            ? 'text-white'
-                            : 'text-gray-500'
-                          : 'text-gray-400'
-                      }
-                    `}>
-                      {item.name}
+      {/* Main Content - Matched with Hero container */}
+      <div className="relative max-w-[1800px] mx-auto px-4 sm:px-6 md:px-8 lg:px-16">
+        <div className="flex items-center justify-between h-20">
+          {/* Logo */}
+          <Link href="/" className="relative shrink-0">
+            <Image
+              src="/logos/logo-colored.png"
+              alt="Logo"
+              width={110}
+              height={36}
+              className="relative"
+              priority
+            />
+          </Link>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center gap-12">
+            {navItems.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className="group relative py-2"
+              >
+                <div className="flex items-center gap-2">
+                  <span className={`text-sm transition-colors ${
+                    pathname === item.href
+                      ? 'text-white'
+                      : 'text-zinc-400 group-hover:text-white'
+                  }`}>
+                    {item.name}
+                  </span>
+                  {item.isNew && (
+                    <span className="px-1.5 py-0.5 text-[10px] font-medium text-zinc-950 bg-amber-400 rounded-full">
+                      NEW
                     </span>
+                  )}
+                </div>
+                {/* Underline effect */}
+                <span className={`absolute bottom-0 left-0 w-full h-px transform origin-left transition-transform duration-300 ${
+                  pathname === item.href
+                    ? 'bg-white scale-x-100'
+                    : 'bg-white/50 scale-x-0 group-hover:scale-x-100'
+                }`} />
+              </Link>
+            ))}
 
-                    {/* Animated Underline */}
-                    <motion.div
-                      className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-amber-500/50 via-amber-500/30 to-transparent"
-                      initial={{ scaleX: 0, opacity: 0 }}
-                      animate={{ 
-                        scaleX: pathname === item.href || hoveredItem?.name === item.name ? 1 : 0,
-                        opacity: pathname === item.href || hoveredItem?.name === item.name ? 1 : 0
-                      }}
-                      transition={{ duration: 0.3 }}
-                    />
-                  </Link>
-                ))}
-              </div>
-
-              {/* Social Links */}
-              <div className="flex items-center gap-4">
-                {socialLinks.map((social) => {
-                  const Icon = social.icon
-                  return (
-                    <motion.a
-                      key={social.name}
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.1 }}
-                      className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors"
-                    >
-                      <Icon className="w-5 h-5 text-white/70" />
-                    </motion.a>
-                  )
-                })}
-              </div>
-            </div>
-
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setIsMobileMenuOpen(true)}
-              className="md:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5 group shrink-0"
+            {/* CTA Button */}
+            <Link
+              href="/tickets"
+              className="group relative inline-flex items-center gap-3 px-5 py-2 rounded-lg border border-white/10 hover:border-amber-500/20 transition-all duration-500"
             >
-              <span className="w-6 h-0.5 bg-white/70 group-hover:bg-white transition-colors" />
-              <span className="w-6 h-0.5 bg-white/70 group-hover:bg-white transition-colors" />
-              <span className="w-6 h-0.5 bg-white/70 group-hover:bg-white transition-colors" />
-            </button>
+              {/* Hover Background */}
+              <div className="absolute inset-0 bg-gradient-to-r from-amber-500/10 to-transparent opacity-0 group-hover:opacity-100 rounded-lg transition-all duration-500" />
+              
+              {/* Content */}
+              <div className="relative flex items-center gap-3">
+                <span className="text-sm font-light tracking-wider text-white/90 group-hover:text-white transition-colors duration-500">
+                  Get Tickets
+                </span>
+                <BsArrowUpRight className="w-3.5 h-3.5 text-amber-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-500" />
+              </div>
+            </Link>
           </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsMobileMenuOpen(true)}
+            className="md:hidden relative w-10 h-10 flex items-center justify-center"
+          >
+            <div className="flex flex-col gap-1.5">
+              <span className="block w-6 h-px bg-white transition-transform origin-right" />
+              <span className="block w-4 h-px bg-white ml-auto transition-transform origin-right" />
+            </div>
+          </button>
         </div>
       </div>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu - Full screen overlay */}
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 w-screen h-screen bg-gradient-to-b from-black/95 to-black/90 backdrop-blur-lg z-50 md:hidden"
-          >
-            <motion.div 
-              className="relative h-full w-full flex flex-col px-4 sm:px-6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              transition={{ duration: 0.3 }}
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/60 backdrop-blur-md z-40"
+              onClick={() => setIsMobileMenuOpen(false)}
+            />
+
+            {/* Menu Content */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 md:hidden"
             >
-              {/* Header */}
-              <div className="h-20 w-full flex items-center justify-between">
-                <Link href="/" onClick={() => setIsMobileMenuOpen(false)}>
-                  <Image
-                    src="/logos/logo-colored.png"
-                    alt="Logo"
-                    width={100}
-                    height={35}
-                    className="opacity-90"
-                  />
-                </Link>
-                <motion.button
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  whileTap={{ scale: 0.95 }}
-                  className="w-10 h-10 flex items-center justify-center rounded-xl bg-white/5 hover:bg-white/10 transition-colors"
-                >
-                  <BsX className="w-6 h-6 text-white/70 hover:text-white transition-colors" />
-                </motion.button>
-              </div>
-
-              {/* Navigation Links */}
-              <div className="flex-1 overflow-y-auto py-8">
-                <motion.div 
-                  className="grid gap-4"
-                  initial="closed"
-                  animate="open"
-                  variants={{
-                    open: {
-                      transition: { staggerChildren: 0.1, delayChildren: 0.2 }
-                    },
-                    closed: {
-                      transition: { staggerChildren: 0.05, staggerDirection: -1 }
-                    }
-                  }}
-                >
-                  {navItems.map((item) => (
-                    <motion.div
-                      key={item.name}
-                      variants={{
-                        open: { opacity: 1, x: 0 },
-                        closed: { opacity: 0, x: -20 }
-                      }}
-                      whileTap={{ scale: 0.98 }}
-                      onHoverStart={() => setSelectedItem(item.name)}
-                      onHoverEnd={() => setSelectedItem(null)}
+              <motion.div 
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="min-h-screen bg-zinc-950/95 backdrop-blur-xl"
+              >
+                <div className="flex flex-col h-full">
+                  {/* Mobile Header - Matched padding */}
+                  <div className="flex items-center justify-between h-20 px-4 sm:px-6 md:px-8 lg:px-16 border-b border-white/10">
+                    <Link href="/" onClick={() => setIsMobileMenuOpen(false)}>
+                      <Image
+                        src="/logos/logo-colored.png"
+                        alt="Logo"
+                        width={100}
+                        height={35}
+                        className="opacity-90"
+                      />
+                    </Link>
+                    <button
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/10 transition-colors"
                     >
-                      <Link
-                        href={item.href}
-                        className="block p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-all"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        <div className="flex items-center justify-between">
-                          <span className={`text-xl font-light ${
-                            pathname === item.href 
-                              ? 'text-white' 
-                              : 'text-white/70'
-                          }`}>
-                            {item.name}
-                          </span>
-                          <motion.div
-                            animate={{ x: selectedItem === item.name ? 5 : 0 }}
-                            transition={{ duration: 0.2 }}
-                          >
-                            <BsArrowRight className="w-5 h-5 text-white/50" />
-                          </motion.div>
-                        </div>
-                        <motion.p 
-                          className="text-sm text-white/40 mt-1"
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ 
-                            opacity: selectedItem === item.name ? 1 : 0,
-                            height: selectedItem === item.name ? 'auto' : 0
-                          }}
-                          transition={{ duration: 0.2 }}
+                      <BsX className="w-6 h-6 text-white/70" />
+                    </button>
+                  </div>
+
+                  {/* Mobile Navigation - Matched padding */}
+                  <div className="flex-1 overflow-y-auto py-12 px-4 sm:px-6 md:px-8 lg:px-16">
+                    <div className="space-y-8">
+                      {navItems.map((item, index) => (
+                        <motion.div
+                          key={item.name}
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: index * 0.1 }}
                         >
-                          {item.description}
-                        </motion.p>
-                      </Link>
-                    </motion.div>
-                  ))}
-                </motion.div>
-              </div>
+                          <Link
+                            href={item.href}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="group flex items-center justify-between py-2"
+                          >
+                            <div className="flex items-center gap-3">
+                              <span className={`text-3xl font-light ${
+                                pathname === item.href
+                                  ? 'text-white'
+                                  : 'text-zinc-400 group-hover:text-white transition-colors'
+                              }`}>
+                                {item.name}
+                              </span>
+                              {item.isNew && (
+                                <span className="px-2 py-1 text-xs font-medium text-zinc-950 bg-amber-400 rounded-full">
+                                  NEW
+                                </span>
+                              )}
+                            </div>
+                            <BsArrowUpRight className="w-5 h-5 text-zinc-600 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                          </Link>
+                        </motion.div>
+                      ))}
 
-              {/* Social Links */}
-              <div className="h-20 w-full flex items-center justify-center gap-4 border-t border-white/10">
-                {socialLinks.map((social) => {
-                  const Icon = social.icon
-                  return (
-                    <motion.a
-                      key={social.name}
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors"
-                    >
-                      <Icon className="w-5 h-5 text-white/70" />
-                    </motion.a>
-                  )
-                })}
-              </div>
+                      {/* Mobile CTA */}
+                      <motion.div
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: navItems.length * 0.1 }}
+                        className="pt-8"
+                      >
+                        <Link
+                          href="/tickets"
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          className="block w-full py-4 text-center text-zinc-950 bg-amber-400 hover:bg-amber-500 rounded-lg font-medium transition-colors"
+                        >
+                          Get Tickets
+                        </Link>
+                      </motion.div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
             </motion.div>
-          </motion.div>
+          </>
         )}
       </AnimatePresence>
     </motion.nav>
