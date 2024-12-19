@@ -28,12 +28,22 @@ export default function Dinopedia() {
   // Set the default view mode based on the screen size
   const [isCompactView, setIsCompactView] = useState(false)
 
+  const [showDisclaimer, setShowDisclaimer] = useState(true)
+
   useEffect(() => {
     // Enable list view mode by default on mobile devices
     if (isMobile) {
       setIsCompactView(true)
     }
   }, [isMobile])
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowDisclaimer(false)
+    }, 5000)
+
+    return () => clearTimeout(timer)
+  }, [])
 
   const filteredDinos = selectedCategory === 'all' 
     ? dinosaurs 
@@ -118,6 +128,18 @@ export default function Dinopedia() {
 
         {/* Gallery Section - Full width */}
         <section className="bg-black/30 backdrop-blur-sm border-t border-white/5">
+          {/* Static Disclaimer */}
+          <div className="max-w-[1800px] mx-auto px-4 sm:px-6 md:px-8 lg:px-16">
+            <div className="py-4 sm:py-6">
+              <div className="bg-gradient-to-r from-amber-500/20 to-transparent border border-amber-500/20 rounded-lg p-4 flex items-center justify-center gap-4">
+                <div className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
+                <p className="text-white/80 text-xs sm:text-sm">
+                  Disclaimer: Our Dinopedia catalogue is still being updated. Some information may be inaccurate and images may not represent the actual species.
+                </p>
+              </div>
+            </div>
+          </div>
+
           <div className="py-12 md:py-24">
             {/* Header with Categories and View Toggle */}
             <div className="max-w-[1800px] mx-auto px-4 sm:px-6 md:px-8 lg:px-16">
@@ -534,6 +556,38 @@ export default function Dinopedia() {
                     </div>
                   </motion.div>
                 </div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
+
+        {/* Disclaimer Overlay */}
+        <AnimatePresence>
+          {showDisclaimer && (
+            <>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 z-[999998] bg-black/80 flex items-center justify-center p-4"
+              >
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 20 }}
+                  className="bg-black/80 backdrop-blur-md rounded-xl border border-white/10 p-6 sm:p-8 max-w-md mx-auto"
+                >
+                  <h3 className="text-xl sm:text-2xl font-light text-white mb-4">Disclaimer</h3>
+                  <p className="text-gray-400 mb-6">
+                    Our Dinopedia catalogue is still being updated. Some information may be inaccurate and images may not represent the actual species.
+                  </p>
+                  <button
+                    onClick={() => setShowDisclaimer(false)}
+                    className="px-6 py-3 bg-amber-500/20 hover:bg-amber-500/30 backdrop-blur-sm border border-amber-500/10 hover:border-amber-500/20 rounded-lg text-white/90 text-sm transition-all duration-300"
+                  >
+                    Got it
+                  </button>
+                </motion.div>
               </motion.div>
             </>
           )}
