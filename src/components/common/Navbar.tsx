@@ -118,7 +118,9 @@ const Navbar = () => {
 
             {/* CTA Button */}
             <Link
-              href="/tickets"
+              href="https://wegrow-online.globaltix.com/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="group relative inline-flex items-center gap-3 px-5 py-2 rounded-lg border border-white/10 hover:border-amber-500/20 transition-all duration-500"
             >
               {/* Hover Background */}
@@ -235,7 +237,9 @@ const Navbar = () => {
                         className="pt-8"
                       >
                         <Link
-                          href="/tickets"
+                          href="https://wegrow-online.globaltix.com/"
+                          target="_blank"
+                          rel="noopener noreferrer"
                           onClick={() => setIsMobileMenuOpen(false)}
                           className="block w-full py-4 text-center text-zinc-950 bg-amber-400 hover:bg-amber-500 rounded-lg font-medium transition-colors"
                         >
