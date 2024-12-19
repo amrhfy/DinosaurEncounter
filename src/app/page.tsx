@@ -14,7 +14,9 @@ export default function Home() {
       {/* Content */}
       <div className="relative z-10">
         <Hero />
-        <Dinopedia />
+        <div id="dinopedia">
+          <Dinopedia />
+        </div>
         <Attractions />
       </div>
     </main>

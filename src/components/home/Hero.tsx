@@ -36,7 +36,15 @@ const Hero = () => {
             Walk among giants in a meticulously crafted prehistoric world.
           </p>
 
-          <Button className="w-full sm:w-auto justify-center">
+          <Button 
+            className="w-full sm:w-auto justify-center"
+            onClick={() => {
+              const nextSection = document.querySelector('#dinopedia')
+              if (nextSection) {
+                nextSection.scrollIntoView({ behavior: 'smooth' })
+              }
+            }}
+          >
             EXPLORE NOW
           </Button>
         </motion.div>

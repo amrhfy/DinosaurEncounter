@@ -143,8 +143,23 @@ export default function About() {
               transition={{ delay: 0.4 }}
               className="flex flex-col sm:flex-row gap-4"
             >
-              <Button className="w-full sm:w-auto">Start Your Journey</Button>
-              <Button className="w-full sm:w-auto bg-transparent border border-white/20 hover:bg-white/10">Watch Video</Button>
+              <Button 
+                className="w-full sm:w-auto"
+                onClick={() => {
+                  const nextSection = document.querySelector('#features')
+                  if (nextSection) {
+                    nextSection.scrollIntoView({ behavior: 'smooth' })
+                  }
+                }}
+              >
+                Start Your Journey
+              </Button>
+              <Button 
+                className="w-full sm:w-auto bg-transparent border border-white/20 opacity-50 pointer-events-none"
+                onClick={() => {}}
+              >
+                Watch Video
+              </Button>
             </motion.div>
           </motion.div>
         </div>
@@ -156,7 +171,7 @@ export default function About() {
       </section>
 
       {/* Features Section - Redesigned */}
-      <section className="py-16 sm:py-32 relative">
+      <section id="features" className="py-16 sm:py-32 relative">
         <div className="max-w-[1800px] mx-auto px-4 sm:px-8 md:px-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
