@@ -1,7 +1,7 @@
 'use client'
 
 import { motion, AnimatePresence } from 'framer-motion'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import { BsArrowRight, BsX, BsGrid3X3, BsListUl } from 'react-icons/bs'
 import CTASection from '@/components/common/CTASection'
@@ -9,6 +9,7 @@ import { dinosaurs, getCategories, type Dinosaur } from '@/lib/data/dinosaurs'
 import { FaUtensils, FaRuler, FaWeight, FaTachometerAlt, FaSearch } from 'react-icons/fa'
 import ScrollIndicator from '@/components/common/ScrollIndicator'
 import { useMediaQuery } from '@/hooks/useMediaQuery'
+import ComingSoonImage from '@/components/common/ComingSoonImage'
 
 const categories = [
   { id: 'all', label: 'All Species' },
@@ -17,6 +18,33 @@ const categories = [
     label: category
   }))
 ]
+
+function getDinoImage(category: string, name: string) {
+  const dinoFamilies = [
+    'theropods',
+    'sauropods',
+    'ceratopsians',
+    'stegosaurs',
+    'ankylosaurs',
+    'ornithopods',
+    'pterosaurs',
+    'marine-reptiles'
+  ]
+
+  // Try to find the image in each family folder
+  for (const family of dinoFamilies) {
+    try {
+      const image = require(`@/images/dino-images/${family}/${name.toLowerCase()}.jpeg`)
+      return image
+    } catch {
+      // Continue to next folder if image not found
+      continue
+    }
+  }
+
+  // Return null if image not found in any folder
+  return null
+}
 
 export default function Dinopedia() {
   const [selectedCategory, setSelectedCategory] = useState('all')
@@ -80,6 +108,16 @@ export default function Dinopedia() {
       })
     }
   }, [selectedDino])
+
+  const getNextDino = useCallback((currentDino: Dinosaur) => {
+    const currentIndex = filteredDinos.findIndex(d => d.id === currentDino.id)
+    return filteredDinos[(currentIndex + 1) % filteredDinos.length]
+  }, [filteredDinos])
+
+  const getPrevDino = useCallback((currentDino: Dinosaur) => {
+    const currentIndex = filteredDinos.findIndex(d => d.id === currentDino.id)
+    return filteredDinos[(currentIndex - 1 + filteredDinos.length) % filteredDinos.length]
+  }, [filteredDinos])
 
   return (
     <div className="min-h-screen">
@@ -247,12 +285,16 @@ export default function Dinopedia() {
                           // Compact View Layout
                           <div className="h-full flex items-center gap-6 p-4">
                             <div className="relative w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
-                              <Image
-                                src={dino.image}
-                                alt={dino.name}
-                                fill
-                                className="object-cover"
-                              />
+                              {getDinoImage(dino.category, dino.name) ? (
+                                <Image
+                                  src={getDinoImage(dino.category, dino.name)}
+                                  alt={dino.name}
+                                  fill
+                                  className="object-cover"
+                                />
+                              ) : (
+                                <ComingSoonImage isCompact={true} />
+                              )}
                             </div>
                             <div className="flex-grow min-w-0">
                               <span className="px-2 py-1 bg-white/10 rounded-full text-[10px] uppercase tracking-wider text-white/70 inline-block mb-2">
@@ -272,13 +314,17 @@ export default function Dinopedia() {
                           <div className="h-full p-4 flex flex-col">
                             {/* Image Container */}
                             <div className="relative flex-grow rounded-lg overflow-hidden bg-black/20">
-                              <Image
-                                src={dino.image}
-                                alt={dino.name}
-                                fill
-                                className="object-cover transition-transform duration-300 group-hover:scale-105"
-                                sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 20vw"
-                              />
+                              {getDinoImage(dino.category, dino.name) ? (
+                                <Image
+                                  src={getDinoImage(dino.category, dino.name)}
+                                  alt={dino.name}
+                                  fill
+                                  className="object-cover transition-transform duration-300 group-hover:scale-105"
+                                  sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 20vw"
+                                />
+                              ) : (
+                                <ComingSoonImage isCompact={false} />
+                              )}
                               <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
                             </div>
 
@@ -392,6 +438,37 @@ export default function Dinopedia() {
               >
                 <div className="min-h-full flex items-center justify-center py-4 sm:py-6 md:py-12">
                   <motion.div className="relative w-full max-w-7xl mx-auto">
+                    {/* Navigation Buttons */}
+                    <div className="absolute top-1/2 -translate-y-1/2 -left-4 -right-4 md:-left-12 md:-right-12 flex justify-between z-[1000001] px-4">
+                      <motion.button
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          setSelectedDino(getPrevDino(selectedDino))
+                        }}
+                        className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-black/50 backdrop-blur-sm border border-white/10 
+                          flex items-center justify-center text-white/70 hover:text-white transition-colors group
+                          hover:bg-black/60 hover:border-white/20"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                      >
+                        <BsArrowRight className="w-5 h-5 rotate-180 group-hover:-translate-x-0.5 transition-transform" />
+                      </motion.button>
+                      
+                      <motion.button
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          setSelectedDino(getNextDino(selectedDino))
+                        }}
+                        className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-black/50 backdrop-blur-sm border border-white/10 
+                          flex items-center justify-center text-white/70 hover:text-white transition-colors group
+                          hover:bg-black/60 hover:border-white/20"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                      >
+                        <BsArrowRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
+                      </motion.button>
+                    </div>
+
                     {/* Close Buttons - Mobile and Desktop */}
                     <div className="relative">
                       {/* Mobile Close Button - Fixed at bottom */}
@@ -430,12 +507,16 @@ export default function Dinopedia() {
                         {/* Left Column - Image and Category */}
                         <div className="relative h-[300px] sm:h-[400px] md:h-full md:min-h-[600px] bg-black">
                           <div className="absolute inset-0 group overflow-hidden">
-                            <Image
-                              src={selectedDino.image}
-                              alt={selectedDino.name}
-                              fill
-                              className="object-cover transition-transform duration-700 group-hover:scale-105"
-                            />
+                            {getDinoImage(selectedDino.category, selectedDino.name) ? (
+                              <Image
+                                src={getDinoImage(selectedDino.category, selectedDino.name)}
+                                alt={selectedDino.name}
+                                fill
+                                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                              />
+                            ) : (
+                              <ComingSoonImage isCompact={false} />
+                            )}
                             <div className="absolute inset-0 bg-gradient-to-r from-black via-black/50 to-transparent" />
                             <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
                           </div>

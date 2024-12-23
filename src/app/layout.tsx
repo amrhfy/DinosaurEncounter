@@ -13,7 +13,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "[BETA] Dinosaur Encounter",
+  title: "Dinosaur Encounter",
   description: "@amrhfy",
   icons: {
     icon: "/logos/favicon.ico",

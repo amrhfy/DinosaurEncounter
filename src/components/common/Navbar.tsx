@@ -5,9 +5,7 @@ import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { usePathname } from 'next/navigation'
-import { BsX, BsArrowUpRight, BsTicket, BsTicketPerforated, BsCalendar2Check } from 'react-icons/bs'
-import { HiOutlineTicket } from 'react-icons/hi'
-import { IoTicketOutline } from 'react-icons/io5'
+import { BsX, BsArrowUpRight } from 'react-icons/bs'
 
 interface NavItem {
   name: string
