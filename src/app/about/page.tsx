@@ -32,9 +32,9 @@ const locations: Location[] = [
     email: "sales@zooteruntum.my",
     image: "/images/locations/kuantan.png",
     operatingHours: {
-      weekdays: "9:00 AM - 6:00 PM",
-      weekends: "9:00 AM - 7:00 PM",
-      holidays: "8:00 AM - 8:00 PM"
+      weekdays: "10:00 AM - 6:00 PM",
+      weekends: "10:00 AM - 6:00 PM",
+      holidays: "10:00 AM - 6:00 PM"
     }
   },
   {
@@ -45,9 +45,9 @@ const locations: Location[] = [
     email: "sales@dinosaurencounter.com.my",
     image: "/images/locations/terengganu.jpg",
     operatingHours: {
-      weekdays: "10:00 AM - 7:00 PM",
-      weekends: "9:00 AM - 8:00 PM",
-      holidays: "9:00 AM - 9:00 PM"
+      weekdays: "9:00 AM - 5:00 PM",
+      weekends: "9:00 AM - 5:00 PM",
+      holidays: "Hours Might Differ"
     }
   },
   {
@@ -58,9 +58,9 @@ const locations: Location[] = [
     email: "sales@dinosaurencounterworld.com",
     image: "/images/locations/perak.jpg",
     operatingHours: {
-      weekdays: "10:00 AM - 6:00 PM",
-      weekends: "9:00 AM - 7:00 PM",
-      holidays: "9:00 AM - 8:00 PM"
+      weekdays: "11:00 AM - 6:00 PM",
+      weekends: "11:00 AM - 6:00 PM",
+      holidays: "11:00 AM - 6:00 PM"
     }
   }
 ]

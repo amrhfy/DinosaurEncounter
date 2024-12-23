@@ -13,12 +13,45 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Dinosaur Encounter",
-  description: "@amrhfy",
-  icons: {
-    icon: "/logos/favicon.ico",
-  },
+  title: 'Dinosaur Encounter Park Malaysia | Virtual Reality Dinosaur Experience',
+  description: 'Experience Malaysia\'s first Virtual Reality Dinosaur Park. Immerse yourself in prehistoric adventures with cutting-edge VR technology at Dinosaur Encounter Park Malaysia. Perfect for family outings and educational trips.',
+  keywords: [
+    'Dinosaur Park Malaysia',
+    'Dinosaur Encounter Park',
+    'VR Dinosaur Experience',
+    'Virtual Reality Park Malaysia',
+    'Dinosaur Theme Park',
+    'Educational Dinosaur Park',
+    'Family Activities Malaysia',
+    'Interactive Dinosaur Experience',
+    'Prehistoric VR Experience',
+    'Kuala Lumpur Theme Park'
+  ],
+  openGraph: {
+    title: 'Dinosaur Encounter Park Malaysia | VR Dinosaur Experience',
+    description: 'Step into prehistoric times at Malaysia\'s premier Virtual Reality Dinosaur Park. Experience life-sized dinosaurs in VR at Dinosaur Encounter Park.',
+    images: ['/og-image.jpg'],
+    locale: 'en_MY',
+    type: 'website',
+  }
 };
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "TouristAttraction",
+  "name": "Dinosaur Encounter Park Malaysia",
+  "description": "Malaysia's first Virtual Reality Dinosaur Park offering immersive prehistoric experiences.",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Kuala Lumpur",
+    "addressCountry": "MY"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "YOUR_LATITUDE",
+    "longitude": "YOUR_LONGITUDE"
+  }
+}
 
 export default function RootLayout({
   children,

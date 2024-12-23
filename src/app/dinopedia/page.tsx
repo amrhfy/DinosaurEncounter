@@ -56,7 +56,7 @@ export default function Dinopedia() {
   // Set the default view mode based on the screen size
   const [isCompactView, setIsCompactView] = useState(false)
 
-  const [showDisclaimer, setShowDisclaimer] = useState(true)
+  const [showDisclaimer, setShowDisclaimer] = useState(false)
 
   useEffect(() => {
     // Enable list view mode by default on mobile devices
@@ -66,11 +66,20 @@ export default function Dinopedia() {
   }, [isMobile])
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowDisclaimer(false)
-    }, 5000)
+    // Check if disclaimer has been shown before
+    const hasSeenDisclaimer = localStorage.getItem('hasSeenDinopediaDisclaimer')
+    
+    if (!hasSeenDisclaimer) {
+      setShowDisclaimer(true)
+      // Set timeout to hide disclaimer after 5 seconds
+      const timer = setTimeout(() => {
+        setShowDisclaimer(false)
+        // Store in localStorage that user has seen the disclaimer
+        localStorage.setItem('hasSeenDinopediaDisclaimer', 'true')
+      }, 5000)
 
-    return () => clearTimeout(timer)
+      return () => clearTimeout(timer)
+    }
   }, [])
 
   const filteredDinos = selectedCategory === 'all' 
@@ -119,6 +128,11 @@ export default function Dinopedia() {
     return filteredDinos[(currentIndex - 1 + filteredDinos.length) % filteredDinos.length]
   }, [filteredDinos])
 
+  const handleCloseDisclaimer = () => {
+    setShowDisclaimer(false)
+    localStorage.setItem('hasSeenDinopediaDisclaimer', 'true')
+  }
+
   return (
     <div className="min-h-screen">
       {/* Content */}
@@ -159,6 +173,10 @@ export default function Dinopedia() {
                     Giants
                   </motion.span>
                 </h1>
+                <p className="mt-6 text-gray-400 max-w-2xl">
+                  Step into the Jurassic world at Malaysia's first Virtual Reality Dinosaur Park. 
+                  Experience life-sized dinosaurs in their natural habitat through cutting-edge VR technology.
+                </p>
               </motion.div>
             </div>
           </div>
@@ -680,7 +698,7 @@ export default function Dinopedia() {
 
                     {/* Close Button */}
                     <button
-                      onClick={() => setShowDisclaimer(false)}
+                      onClick={handleCloseDisclaimer}
                       className="shrink-0 w-6 h-6 rounded-md flex items-center justify-center text-white/40 hover:text-white/70 hover:bg-white/10 transition-colors"
                     >
                       <BsX className="w-4 h-4" />
@@ -690,13 +708,13 @@ export default function Dinopedia() {
                   {/* Action Buttons */}
                   <div className="flex items-center justify-end gap-2 mt-4">
                     <button
-                      onClick={() => setShowDisclaimer(false)}
+                      onClick={handleCloseDisclaimer}
                       className="px-3 py-1.5 text-xs text-white/70 hover:text-white transition-colors"
                     >
                       Dismiss
                     </button>
                     <button
-                      onClick={() => setShowDisclaimer(false)}
+                      onClick={handleCloseDisclaimer}
                       className="px-3 py-1.5 text-xs bg-amber-500/10 hover:bg-amber-500/20 text-amber-500 rounded-md transition-colors"
                     >
                       Got it
