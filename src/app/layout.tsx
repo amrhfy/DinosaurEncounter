@@ -15,6 +15,11 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: 'Dinosaur Encounter Park Malaysia | Virtual Reality Dinosaur Experience',
   description: 'Experience Malaysia\'s first Virtual Reality Dinosaur Park. Immerse yourself in prehistoric adventures with cutting-edge VR technology at Dinosaur Encounter Park Malaysia. Perfect for family outings and educational trips.',
+  icons: {
+    icon: '/logos/favicon.ico',
+    shortcut: '/logos/favicon.ico',
+    apple: '/logos/favicon.ico',
+  },
   keywords: [
     'Dinosaur Park Malaysia',
     'Dinosaur Encounter Park',
